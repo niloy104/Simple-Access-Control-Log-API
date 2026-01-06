@@ -2,16 +2,6 @@
 
 ---
 
-## Tech Stack
-
-* **Python** 3.12
-* **Django** 5.x
-* **SQLite** (default, no external DB required)
-* **Docker** (containerized setup)
-* **GNU Make** (developer convenience commands)
-
----
-
 ## Project Structure
 
 ```
@@ -35,7 +25,7 @@ Make sure the following are installed on your system:
 * Python >= 3.10
 * Docker >= 24
 * Git
-* Make (usually preinstalled on Linux/macOS)
+* Make 
 
 ---
 
@@ -44,8 +34,8 @@ Make sure the following are installed on your system:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/niloy104/access_control_project.git
-cd access_control_project
+git clone https://github.com/niloy104/Simple-Access-Control-Log-API.git
+cd Simple-Access-Control-Log-API
 ```
 
 ### 2. Create and activate a virtual environment
