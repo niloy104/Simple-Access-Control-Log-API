@@ -1,5 +1,4 @@
-# Access Control Log API
-
+# Simple Access Control Log API
 ---
 
 ## Tech Stack
