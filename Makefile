@@ -1,38 +1,29 @@
-PYTHON := python3
-VENV := .venv
-PIP := $(VENV)/bin/pip
-PY := $(VENV)/bin/python
-MANAGE := $(PY) manage.py
+.PHONY: setup run docker docker-build docker-up docker-test test
 
-.DEFAULT_GOAL := help
+# Setup local venv and install dependencies
+setup:
+	python3 -m venv .venv
+	.venv/bin/pip install --upgrade pip setuptools wheel
+	.venv/bin/pip install -r requirements.txt
 
-help:
-	@echo ""
-	@echo "Available commands:"
-	@echo "  make venv        Create virtual environment"
-	@echo "  make install     Install dependencies"
-	@echo "  make migrate     Run database migrations"
-	@echo "  make run         Run development server"
-	@echo "  make test        Run unit tests"
-	@echo "  make clean       Remove virtualenv and cache files"
-	@echo ""
-
-venv:
-	$(PYTHON) -m venv $(VENV)
-
-install: venv
-	$(PIP) install --upgrade pip
-	$(PIP) install django djangorestframework
-
-migrate:
-	$(MANAGE) migrate
+# Run Django server locally
 run:
-	$(MANAGE) runserver
-test:
-	$(MANAGE) test access_control
+	. .venv/bin/activate && python manage.py runserver
 
-clean:
-	rm -rf $(VENV)
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
-	find . -type f -name "*.log" -delete
+# Docker build
+docker-build:
+	docker build -t access_control_app .
+
+# Docker run
+docker-up:
+	docker-compose up -d
+
+# Run tests locally
+test:
+	@echo "Running tests locally in virtual environment..."
+	. .venv/bin/activate && python manage.py test
+
+# Run tests in Docker
+docker-test:
+	@echo "Running tests inside Docker..."
+	docker-compose run --rm web python manage.py test
